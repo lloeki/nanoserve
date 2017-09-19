@@ -139,7 +139,7 @@ module NanoServe
       end
 
       def parse_method(str)
-        str
+        str.upcase
       end
 
       def parse_path(str)
