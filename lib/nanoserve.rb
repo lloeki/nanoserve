@@ -106,8 +106,28 @@ module NanoServe
         @uri.path
       end
 
+      def query_array
+        URI.decode_www_form(@uri.query || '')
+      end
+
+      def form_array
+        form? ? URI.decode_www_form(body) : []
+      end
+
+      def query
+        Hash[*query_array.flatten]
+      end
+
+      def form
+        Hash[*form_array.flatten]
+      end
+
       def params
-        Hash[*@uri.query.split('&').map { |kv| kv.split('=') }.flatten]
+        query.merge(form)
+      end
+
+      def form?
+        content_type == 'application/x-www-form-urlencoded'
       end
 
       def body
