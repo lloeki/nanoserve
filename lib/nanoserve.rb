@@ -65,9 +65,9 @@ module NanoServe
         buf = +''
         loop do
           line = conn.readline
-          break if line.chomp == ''
           req << line
           buf << line if logger.debug?
+          break if req.headers?
         end
         logger.debug "request:\n" + buf.gsub(/^/, '    ')
 
@@ -102,6 +102,10 @@ module NanoServe
         else
           @body << line
         end
+      end
+
+      def headers?
+        @sep
       end
 
       REQ_RE = %r{(?<method>[A-Z]+)\s+(?<path>\S+)\s+(?<version>HTTP/\d+.\d+)$}
