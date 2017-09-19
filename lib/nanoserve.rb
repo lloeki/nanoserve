@@ -144,7 +144,7 @@ module NanoServe
           raise RequestError, "cannot parse header: '#{str}'"
         end
 
-        @headers[m[:header]] = m[:value]
+        @headers[m[:header].downcase] = m[:value]
       end
     end
 
