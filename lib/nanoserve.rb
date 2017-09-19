@@ -125,7 +125,7 @@ module NanoServe
       def parse_header(str)
         (@sep = '' && return) if str == ''
 
-        unless (m = str.match(/(?<header>[A-Z][-A-Za-z]*):\s+(?<value>.+)$/))
+        unless (m = str.match(/(?<header>[A-Za-z][-A-Za-z]*):\s+(?<value>.+)$/))
           raise RequestError, "cannot parse header: '#{str}'"
         end
 
