@@ -67,7 +67,7 @@ module NanoServe
           line = conn.readline
           break if line.chomp == ''
           req << line
-          buf << line
+          buf << line if logger.debug?
         end
         logger.debug "request:\n" + buf.gsub(/^/, '    ')
 
