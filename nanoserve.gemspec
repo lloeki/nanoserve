@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        =  'nanoserve'
-  s.version     =  '0.2.0'
+  s.version     =  '0.3.0'
   s.licenses    =  ['3BSD']
   s.summary     =  'Listen to one-shot connections'
   s.authors     =  ['Loic Nageleisen']
