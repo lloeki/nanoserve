@@ -28,8 +28,9 @@ module NanoServe
           @block.call(conn, y)
         rescue EOFError
           logger.debug "#{client}: disconnected"
-        ensure
+        else
           logger.debug "#{client}: closed"
+        ensure
           conn.close
         end
       end
