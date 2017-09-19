@@ -11,14 +11,15 @@ module NanoServe
       @port  = port
       @block = block
       @thr   = nil
+      @srv   = nil
     end
 
     def start(y)
-      server = TCPServer.new(@port)
+      @srv = TCPServer.new(@port)
 
       @thr = Thread.new do
         Thread.abort_on_exception = true
-        conn = server.accept
+        conn = @srv.accept
         port, host = conn.peeraddr[1, 2]
         client = "#{host}:#{port}"
         logger.debug "#{client}: connected"
@@ -38,12 +39,12 @@ module NanoServe
       yield
 
       @thr.join
-      server.close
 
       y
     end
 
     def stop
+      @srv.close
       @thr.kill
     end
 

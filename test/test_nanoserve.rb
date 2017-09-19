@@ -24,6 +24,8 @@ class TestNanoServe < MiniTest::Test
       s.close
     end
 
+    r.stop
+
     assert_equal(uuid, buf)
   end
 
@@ -49,6 +51,8 @@ class TestNanoServe < MiniTest::Test
     req = r.start([]) do
       Net::HTTP.get(uri + "test?uuid=#{uuid}")
     end
+
+    r.stop
 
     assert_equal(uuid, req.first.params['uuid'])
   end
