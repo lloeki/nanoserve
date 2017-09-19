@@ -98,6 +98,14 @@ module NanoServe
         @body         = +''.encode('ASCII-8BIT')
       end
 
+      def host
+        @headers['host']
+      end
+
+      def path
+        @uri.path
+      end
+
       def params
         Hash[*@uri.query.split('&').map { |kv| kv.split('=') }.flatten]
       end
@@ -130,6 +138,10 @@ module NanoServe
 
       def content_length?
         @headers.key?('content-length')
+      end
+
+      def content_type
+        @headers['content-type']
       end
 
       private
