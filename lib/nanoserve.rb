@@ -186,7 +186,7 @@ module NanoServe
       end
 
       def body=(value)
-        @body = value.tap { @content_length = body.bytes.count.to_s }
+        @body = value.tap { @content_length = value.bytes.count.to_s }
       end
 
       def to_s
@@ -216,7 +216,7 @@ module NanoServe
       end
 
       def content_length
-        @content_length ||= body.bytes.count.to_s
+        @content_length || '0'
       end
 
       def content_type
