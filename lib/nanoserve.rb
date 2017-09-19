@@ -70,6 +70,13 @@ module NanoServe
           break if req.headers?
         end
         logger.debug "request:\n" + buf.gsub(/^/, '    ')
+        length = 0
+        while req.content_length? && length < req.content_length
+          data = conn.readpartial(1024)
+          length += data.size
+          req << data
+        end
+        logger.debug "request body: #{length} bytes read"
 
         res = Response.new
         logger.debug 'calling'
@@ -88,6 +95,7 @@ module NanoServe
         @http_version = nil
         @sep          = nil
         @headers      = {}
+        @body         = +''.encode('ASCII-8BIT')
       end
 
       def params
@@ -100,12 +108,20 @@ module NanoServe
         elsif @sep.nil?
           parse_header(line.chomp)
         else
-          @body << line
+          parse_body(line)
         end
       end
 
       def headers?
         @sep
+      end
+
+      def content_length
+        @headers['content-length'].to_i
+      end
+
+      def content_length?
+        @headers.key?('content-length')
       end
 
       private
@@ -145,6 +161,10 @@ module NanoServe
         end
 
         @headers[m[:header].downcase] = m[:value]
+      end
+
+      def parse_body(line)
+        @body << line
       end
     end
 
