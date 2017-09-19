@@ -102,6 +102,14 @@ module NanoServe
         Hash[*@uri.query.split('&').map { |kv| kv.split('=') }.flatten]
       end
 
+      def body
+        @body
+      end
+
+      def [](key)
+        @headers[key.downcase]
+      end
+
       def <<(line)
         if @method.nil?
           parse_request(line.chomp)
