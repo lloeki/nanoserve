@@ -52,6 +52,10 @@ module NanoServe
     def logger
       @logger ||= Logger.new(STDOUT).tap { |l| l.level = Logger::INFO }
     end
+
+    def logger=(logger)
+      @logger = logger
+    end
   end
 
   class HTTPResponder < TCPResponder
