@@ -108,6 +108,8 @@ module NanoServe
         @sep
       end
 
+      private
+
       REQ_RE = %r{(?<method>[A-Z]+)\s+(?<path>\S+)\s+(?<version>HTTP/\d+.\d+)$}
 
       def parse_request(str)
